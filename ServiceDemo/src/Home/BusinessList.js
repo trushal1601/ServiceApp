@@ -41,7 +41,7 @@ const businessLists = [
 ];
 
 const renderBuisenessList = ({ item }) => {
-    console.log("aasccac",item.category);
+    // console.log("aasccac",item.category);
   return (
     <View style={{ marginTop: 10, marginLeft: 10 }}>
        
@@ -53,7 +53,7 @@ const renderBuisenessList = ({ item }) => {
       <View style={{padding:7,display:"flex",gap:3}}>
        <Text style={{fontSize:17,fontFamily:"outfit-medium"}}>{item.name}</Text>
        <Text style={{fontSize:13,fontFamily:"outfit",color:"gray"}}>{item.contactPerson}</Text>
-       <Text style={{fontSize:10,fontFamily:"outfit",padding:3,color:"#8E3FFF",backgroundColor:"#C6AFCD",borderRadius:3,alignSelf:"flex-start",paddingHorizontal:7}}>{item.category}</Text>
+       <Text style={{fontSize:10,fontFamily:"outfit",padding:3,color:"#8E3FFF",backgroundColor:"#f1d4fa",borderRadius:3,alignSelf:"flex-start",paddingHorizontal:7}}>{item.category}</Text>
        </View>
       </View>
     </View>
