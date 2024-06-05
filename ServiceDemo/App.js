@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, Pressable} from "react-native"
+import {View, Text, Pressable,StatusBar} from "react-native"
 import Login from "./src/Login";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import * as SecureStore from 'expo-secure-store';
@@ -32,10 +32,12 @@ const App = () => {
         'outfit-bold': require('./asset/font/Outfit-Bold.ttf'),
       });
     return(
+      
         <ClerkProvider 
         tokenCache={tokenCache}
         publishableKey="pk_test_YWJsZS1oaXBwby04MC5jbGVyay5hY2NvdW50cy5kZXYk">
-        <View style={{flex:1,backgroundColor:'#fff',paddingTop:20}}>
+         <StatusBar barStyle="auto" />
+        <View style={{flex:1,backgroundColor:'#fff'}}>
            
            <SignedIn>
           <NavigationContainer>

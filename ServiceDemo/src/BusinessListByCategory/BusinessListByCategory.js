@@ -75,6 +75,7 @@ const renderData = ({ item }) => {
         marginBottom: 15,
         flexDirection: "row",
         gap: 10,
+        marginTop:10
       }}
       onPress={() => navigation.push("BusinessDetail")}
     >
@@ -109,7 +110,7 @@ const BusinessListByCategory = ({ route }) => {
   const { data } = route.params;
   // console.log("fsefooooooooooolll", data.data);
   return (
-    <View style={{ padding: 10, paddingTop: 20 }}>
+    <View style={{ padding: 10, paddingTop: 20,marginTop:20 }}>
       <View style={{flexDirection:"row",gap:10}}>
       <TouchableOpacity
         style={{ flexDirection: "row", gap: 10, alignItems: "center" }}

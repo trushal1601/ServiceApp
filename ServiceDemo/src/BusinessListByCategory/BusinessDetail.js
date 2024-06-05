@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,11 +10,12 @@ import {
   Modal,
   FlatList,
   TextInput,
+  KeyboardAvoidingView,
+  Linking,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
 import CalendarPicker from "react-native-calendar-picker";
 
 const BusinessDetail = ({ route }) => {
@@ -21,7 +23,7 @@ const BusinessDetail = ({ route }) => {
   const navigation = useNavigation();
   const [readmore, setReadmore] = useState(false);
   const [showModel, setshowModel] = useState(false);
-  const [timeList, setTimeList] = useState();
+  const [timeList, setTimeList] = useState([]);
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [note, setNote] = useState();
@@ -29,6 +31,7 @@ const BusinessDetail = ({ route }) => {
   useEffect(() => {
     getTime();
   }, []);
+
   const getTime = () => {
     const timeList = [];
     for (let i = 8; i <= 12; i++) {
@@ -51,11 +54,8 @@ const BusinessDetail = ({ route }) => {
   };
 
   return (
-    <View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ height: "90%" }}
-      >
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ height: "90%" }}>
         <View style={{ flexDirection: "row", gap: 10 }}>
           <TouchableOpacity
             style={{ position: "absolute", zIndex: 10, padding: 10 }}
@@ -64,22 +64,11 @@ const BusinessDetail = ({ route }) => {
             <Ionicons name="arrow-back-outline" size={30} color="white" />
           </TouchableOpacity>
         </View>
-        <Image
-          source={{ uri: data.images.url }}
-          style={{ width: "100%", height: 300 }}
-        />
+        <Image source={{ uri: data.images.url }} style={{ width: "100%", height: 300 }} />
         <View style={{ padding: 20, display: "flex", gap: 7 }}>
-          <Text style={{ fontFamily: "outfit-bold", fontSize: 25 }}>
-            {data.name}
-          </Text>
+          <Text style={{ fontFamily: "outfit-bold", fontSize: 25 }}>{data.name}</Text>
           <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-            <Text
-              style={{
-                fontFamily: "outfit-medium",
-                fontSize: 20,
-                color: "#8E3FFF",
-              }}
-            >
+            <Text style={{ fontFamily: "outfit-medium", fontSize: 20, color: "#8E3FFF" }}>
               {data.contactPerson} 🌟
             </Text>
             <Text
@@ -95,7 +84,6 @@ const BusinessDetail = ({ route }) => {
             </Text>
           </View>
           <Text style={{ fontSize: 17, fontFamily: "outfit", color: "gray" }}>
-            {" "}
             <Entypo name="location-pin" size={25} color="#8E3FFF" />
             {data.address}
           </Text>
@@ -108,9 +96,7 @@ const BusinessDetail = ({ route }) => {
             }}
           ></View>
           <View>
-            <Text style={{ fontFamily: "outfit-medium", fontSize: 19 }}>
-              About me
-            </Text>
+            <Text style={{ fontFamily: "outfit-medium", fontSize: 19 }}>About me</Text>
             <Text
               style={{
                 fontFamily: "outfit",
@@ -123,9 +109,7 @@ const BusinessDetail = ({ route }) => {
               {data.about}
             </Text>
             <Pressable onPress={() => setReadmore(!readmore)}>
-              <Text
-                style={{ color: "#8E3FFF", fontSize: 16, fontFamily: "outfit" }}
-              >
+              <Text style={{ color: "#8E3FFF", fontSize: 16, fontFamily: "outfit" }}>
                 {readmore ? "Read Less" : "Read More"}
               </Text>
             </Pressable>
@@ -140,9 +124,7 @@ const BusinessDetail = ({ route }) => {
           </View>
         </View>
       </ScrollView>
-      <View
-        style={{ display: "flex", flexDirection: "row", margin: 8, gap: 5 }}
-      >
+      <View style={{ flexDirection: "row", margin: 8, gap: 5 }}>
         <TouchableOpacity
           style={{
             padding: 15,
@@ -152,6 +134,7 @@ const BusinessDetail = ({ route }) => {
             borderRadius: 99,
             flex: 1,
           }}
+            onPress={()=>Linking.openURL('mailto:'+"trushal.prajapati1601@gmail.com"+"?subject=I am looking for your Service&body=Hi There,")}
         >
           <Text
             style={{
@@ -188,142 +171,139 @@ const BusinessDetail = ({ route }) => {
         </TouchableOpacity>
       </View>
       <Modal animationType="slide" visible={showModel}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 10,
-            padding: 10,
-          }}
-        >
-          <TouchableOpacity onPress={() => setshowModel(false)}>
-            <Ionicons name="arrow-back-outline" size={30} color="black" />
-          </TouchableOpacity>
-          <Text style={{ fontSize: 23, fontFamily: "outfit-medium" }}>
-            Booking
+      <ScrollView>
+      
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, padding: 10 }}>
+            <TouchableOpacity onPress={() => setshowModel(false)}>
+              <Ionicons name="arrow-back-outline" size={30} color="black" />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 23, fontFamily: "outfit-medium" }}>Booking</Text>
+          </View>
+          <Text style={{ fontFamily: "outfit-medium", fontSize: 19, marginLeft: 20 }}>
+            Select Date
           </Text>
-        </View>
-        <Text
-          style={{ fontFamily: "outfit-medium", fontSize: 19, marginLeft: 20 }}
-        >
-          Select Date
-        </Text>
-        <View
-          style={{
-            backgroundColor: "#f1d4fa",
-            padding: 20,
-            borderRadius: 15,
-            margin: 15,
-          }}
-        >
-          <CalendarPicker
-            onDateChange={setSelectedDate}
-            width={340}
-            minDate={Date.now()}
-            todayBackgroundColor="black"
-            todayTextStyle={{ color: "white" }}
-            selectedDayColor="#8E3FFF"
-            selectedDayTextColor="white"
-          />
-        </View>
-        <View style={{ gap: 10 }}>
-          <Text
+          <View
             style={{
-              fontFamily: "outfit-medium",
-              fontSize: 19,
-              marginLeft: 20,
-            }}
-          >
-            Select TIme Slot
-          </Text>
-          <FlatList
-            data={timeList}
-            style={{ marginLeft: 10 }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => index.toString()} // Add a key extractor
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={{ marginRight: 10 }}
-                onPress={() => setSelectedTime(item.time)}
-              >
-                <Text
-                  style={[
-                    selectedTime == item.time
-                      ? styles.selectedTime
-                      : styles.unSelectedTime,
-                  ]}
-                >
-                  {item.time}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-        <View style={{ margin: 15 }}>
-          <Text
-            style={{
-              fontFamily: "outfit-medium",
-              fontSize: 19,
-            }}
-          >
-            Any Suggestion Note
-          </Text>
-          <TextInput
-            placeholder="Note"
-            numberOfLines={4}
-            multiline={true}
-            onPress={(text) => setNote(text)}
-            style={{
-              borderWidth: 1,
+              backgroundColor: "#f1d4fa",
+              padding: 20,
               borderRadius: 15,
-              textAlignVertical: "top",
-              padding: 10,
-              fontFamily: "outfit",
-              fontSize: 16,
-              borderColor: "#8E3FFF",
+              margin: 15,
             }}
-          />
-          <TouchableOpacity style={{marginTop:20}}>
+          >
+            <CalendarPicker
+              onDateChange={setSelectedDate}
+              width={340}
+              minDate={Date.now()}
+              todayBackgroundColor="black"
+              todayTextStyle={{ color: "white" }}
+              selectedDayColor="#8E3FFF"
+              selectedDayTextColor="white"
+            />
+          </View>
+          <View style={{ gap: 10 }}>
             <Text
               style={{
-                textAlign: "center",
                 fontFamily: "outfit-medium",
-                fontSize: 17,
-                backgroundColor: "#8E3FFF",
-                color: "white",
-                padding: 13,
-                borderRadius: 99,
-                elevation:10
+                fontSize: 19,
+                marginLeft: 20,
               }}
             >
-              Confirm & Book
+              Select Time Slot
             </Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-export default BusinessDetail;
-
-const styles = StyleSheet.create({
-  selectedTime: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#8E3FFF",
-    borderRadius: 99,
-    paddingHorizontal: 18,
-    color: "white",
-    backgroundColor: "#8E3FFF",
-  },
-  unSelectedTime: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#8E3FFF",
-    borderRadius: 99,
-    paddingHorizontal: 18,
-    color: "#8E3FFF",
-  },
-});
+            <FlatList
+              data={timeList}
+              style={{ marginLeft: 10 }}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={{ marginRight: 10 }}
+                  onPress={() => setSelectedTime(item.time)}
+                  >
+                    <Text
+                      style={[
+                        selectedTime == item.time
+                          ? styles.selectedTime
+                          : styles.unSelectedTime,
+                      ]}
+                    >
+                      {item.time}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+            <View style={{ margin: 15 }}>
+              <Text
+                style={{
+                  fontFamily: "outfit-medium",
+                  fontSize: 19,
+                }}
+              >
+                Any Suggestion Note
+              </Text>
+              <TextInput
+                placeholder="Note"
+                numberOfLines={4}
+                multiline={true}
+                onChangeText={(text) => setNote(text)} // Corrected from onPress to onChangeText
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 15,
+                  textAlignVertical: "top",
+                  padding: 10,
+                  fontFamily: "outfit",
+                  fontSize: 16,
+                  borderColor: "#8E3FFF",
+                }}
+              />
+              <TouchableOpacity
+                style={{ marginTop: 20 }}
+                onPress={() => console.warn("Service Booked")}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "outfit-medium",
+                    fontSize: 17,
+                    backgroundColor: "#8E3FFF",
+                    color: "white",
+                    padding: 13,
+                    borderRadius: 99,
+                    elevation: 10,
+                  }}
+                >
+                  Confirm & Book
+                </Text>
+              </TouchableOpacity>
+            </View>
+         
+        </ScrollView>
+        </Modal>
+      </View>
+    );
+  };
+  
+  export default BusinessDetail;
+  
+  const styles = StyleSheet.create({
+    selectedTime: {
+      padding: 10,
+      borderWidth: 1,
+      borderColor: "#8E3FFF",
+      borderRadius: 99,
+      paddingHorizontal: 18,
+      color: "white",
+      backgroundColor: "#8E3FFF",
+    },
+    unSelectedTime: {
+      padding: 10,
+      borderWidth: 1,
+      borderColor: "#8E3FFF",
+      borderRadius: 99,
+      paddingHorizontal: 18,
+      color: "#8E3FFF",
+    },
+  });
+  
